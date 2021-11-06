@@ -25,7 +25,17 @@ class _AddListPageState extends State<AddListPage> {
                 SizedBox(height: 20),
                 TextField(
                   decoration: InputDecoration(
-                    labelText: 'judul',
+                    labelText: 'Tanggal',
+                    contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: Colors.white)),
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Judul',
                     contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
