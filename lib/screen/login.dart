@@ -1,7 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../screen/home.dart';
 import '../screen/register.dart';
 import '../main_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+}
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,8 +23,13 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
         backgroundColor: Color(0xff9ADC2F),
         body: SingleChildScrollView(
@@ -71,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                                     )),
                                 SizedBox(height: 20),
                                 TextFormField(
+                                  controller: emailController,
                                   decoration: InputDecoration(
                                       contentPadding:
                                           EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -84,6 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 SizedBox(height: 20),
                                 TextFormField(
+                                  controller: passwordController,
                                   decoration: InputDecoration(
                                       contentPadding:
                                           EdgeInsets.fromLTRB(15, 15, 15, 15),
@@ -110,12 +126,13 @@ class _LoginPageState extends State<LoginPage> {
                                         elevation: 15.0, // background
                                         onPrimary: Colors.white, // foreground
                                       ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MyScreen()));
+                                      onPressed: () async {
+                                        await FirebaseAuth.instance
+                                            .signInWithEmailAndPassword(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        );
+                                        setState(() {});
                                       },
                                       // style: ElevatedButton.styleFrom(primary: Colors.yellow),
                                       child: Text('Login',
