@@ -6,6 +6,7 @@ class Cart {
   final String description;
   final double price;
   final String type;
+  final String date;
 
   //BUAT CONSTRUCTOR DIMANA SECARA DEFAULT CLASS INI AKAN MEMINTA DATA TERSEBUT
   Cart(
@@ -13,5 +14,6 @@ class Cart {
       required this.title,
       required this.description,
       required this.price,
-      required this.type});
+      required this.type,
+      required this.date});
 }
