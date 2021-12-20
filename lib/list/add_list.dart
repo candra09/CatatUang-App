@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_project_1/screen/home.dart';
+import 'dart:async';
 
 class AddListPage extends StatefulWidget {
   @override
@@ -7,7 +8,36 @@ class AddListPage extends StatefulWidget {
 }
 
 class _AddListPageState extends State<AddListPage> {
+  var tanggal = '';
+  var judul = '';
+  var deskripsi = '';
+  var harga = '';
+  var type = '';
+
+  DateTime _dueDate = DateTime.now();
+  String _dateText = '';
+
+  Future<Null> _selectDueDate(BuildContext context) async {
+    final picked = await showDatePicker(
+        context: context,
+        initialDate: _dueDate,
+        firstDate: DateTime(2019),
+        lastDate: DateTime(2023));
+
+    if (picked != null) {
+      setState(() {
+        _dueDate = picked;
+        _dateText = "${picked.day}/${picked.month}/${picked.year}";
+      });
+    }
+  }
+
   @override
+  void initState() {
+    super.initState();
+    _dateText = "${_dueDate.day}/${_dueDate.month}/${_dueDate.year}";
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -22,83 +52,105 @@ class _AddListPageState extends State<AddListPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 TextField(
                   decoration: InputDecoration(
-                    labelText: 'Tanggal',
+                    labelText: 'Tanggal(15/12/2019)',
+                    prefixIcon: Icon(Icons.date_range),
                     contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(color: Colors.white)),
                   ),
+                  onChanged: (v) {
+                    tanggal = v ?? '';
+                  },
                 ),
                 SizedBox(height: 10),
                 TextField(
                   decoration: InputDecoration(
                     labelText: 'Judul',
+                    prefixIcon: Icon(Icons.dashboard),
                     contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(color: Colors.white)),
                   ),
+                  onChanged: (v) {
+                    judul = v ?? '';
+                  },
                 ),
                 SizedBox(height: 10),
                 TextField(
                   decoration: InputDecoration(
-                      labelText: 'Deskripsi ',
-                      contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white))),
+                    labelText: 'Deskripsi ',
+                    prefixIcon: Icon(Icons.note),
+                    contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: Colors.white)),
+                  ),
+                  onChanged: (v) {
+                    deskripsi = v ?? '';
+                  },
                 ),
                 SizedBox(height: 10),
                 TextField(
                   decoration: InputDecoration(
-                      labelText: 'Harga',
-                      contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white))),
+                    labelText: 'Harga',
+                    prefixIcon: Icon(Icons.price_change_outlined),
+                    contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: Colors.white)),
+                  ),
+                  onChanged: (v) {
+                    harga = v ?? '';
+                  },
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 10),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Type(in/out)',
+                    prefixIcon: Icon(Icons.dashboard),
+                    contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                  ),
+                  onChanged: (v) {
+                    type = v ?? '';
+                  },
+                ),
+                SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    FlatButton(
-                      child: Text(
-                        'Tambah',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      color: Color(0xff238E3B),
+                    ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                        _simpanFB();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Data telah ditambahkan')));
                       },
+                      child: Text('Simpan'),
                     ),
-                    FlatButton(
-                      child: Text(
-                        'Kurang',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      color: Color(0xff238E3B),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
-                      },
-                    )
                   ],
                 )
               ],
             ),
           ),
         ));
+  }
+
+  void _simpanFB() async {
+    var collBarang = FirebaseFirestore.instance.collection('catat_barang');
+    await collBarang.add({
+      'tanggal': tanggal,
+      'judul': judul,
+      'deskripsi': deskripsi,
+      'harga': harga,
+      'type': type
+    });
   }
 }
