@@ -1,52 +1,70 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_project_1/list/item_list.dart';
 import 'package:flutter_application_project_1/models/cart.dart';
 
 class Dashboard extends StatelessWidget {
 //DEFINISIKAN VARIABLE UNTUK MENAMPUNG DATA LIST CART
-  final List<Cart> _listCart;
+  // final List<ItemList> items;
 
 //BUAT CONSTRUCTOR UNTUK MEMINTA DATA LIST CARTNYA
-  Dashboard(this._listCart);
+  // Dashboard(this.items);
 
   //buat getter menghitung total penghasilan
-  double get Penghasilan {
-    return _listCart.fold(0, (sum, item) {
-      return sum += item.price;
-    });
-  }
 
-  double get Pengurangan {
-    return _listCart.fold(0, (sum, item) {
-      return sum -= item.price;
-    });
-  }
+  // List<dynamic> items = [];
+
+  // double get Penghasilan {
+  //   return items.fold(0, (sum, item) {
+  //     return sum += item.harga;
+  //   });
+  // }
+
+  // double get Pengurangan {
+  //   return items.fold(0, (sum, item) {
+  //     return sum -= item.harga;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 250,
+        height: 220,
         color: Color(0xff9ADC2F),
         child: Column(
           children: [
             Container(
-              height: 120,
+              height: 100,
               width: double.infinity,
-              padding: EdgeInsets.only(top: 50, left: 20),
+              padding: EdgeInsets.only(top: 40),
               color: Color(0xff9ADC2F),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Budi ',
-                    style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+              // child: Column(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListTile(
+                leading: Icon(
+                  Icons.auto_stories_outlined,
+                  size: 30,
+                ),
+                title: Text(
+                  "Catat Uang",
+                  style: TextStyle(
+                      fontFamily: "DancingScript",
+                      fontSize: 30,
+                      color: Colors.white,
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.bold),
+                ),
+                trailing: IconButton(
+                  onPressed: () {
+                    // _initData();
+                  },
+                  icon: Icon(
+                    Icons.refresh,
+                    color: Colors.white,
+                    size: 36,
                   ),
-                  Text('085745554853',
-                      style: TextStyle(fontSize: 15, color: Colors.white))
-                ],
+                ),
               ),
             ),
             Container(
@@ -66,7 +84,7 @@ class Dashboard extends StatelessWidget {
                           Text('Penghasilan'),
                           SizedBox(height: 4),
                           Text(
-                            Penghasilan.toStringAsFixed(0),
+                            'Rp. 10.000',
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
                           )
@@ -77,7 +95,7 @@ class Dashboard extends StatelessWidget {
                         children: [
                           Text('Pengeluaran'),
                           SizedBox(height: 4),
-                          Text(Pengurangan.toStringAsFixed(0),
+                          Text('Rp. 5.000',
                               style: TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.bold))
                         ],
