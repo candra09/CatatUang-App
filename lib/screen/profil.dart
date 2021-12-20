@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './home.dart';
 import 'edit_profil.dart';
+import '../main_screen.dart';
 
 class ProfilPage extends StatelessWidget {
   @override
@@ -58,7 +58,7 @@ class ProfilPage extends StatelessWidget {
                                 size: 35,
                               ),
                               Text(
-                                'Budi@gmail.com',
+                                'Admin@gmail.com',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -78,7 +78,7 @@ class ProfilPage extends StatelessWidget {
                                 size: 35,
                               ),
                               Text(
-                                'Budi@gmail.com',
+                                '0857455xxxxxxxxx',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -98,7 +98,7 @@ class ProfilPage extends StatelessWidget {
                                 size: 35,
                               ),
                               Text(
-                                'Budi@gmail.com',
+                                'jalan Angsa  no.11',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -133,7 +133,23 @@ class ProfilPage extends StatelessWidget {
                       },
                     ),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                FlatButton(
+                    splashColor: Colors.blue,
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return MyScreen();
+                      }));
+                    },
+                    child: Text('Back to Home',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ))),
               ],
             ),
           )
