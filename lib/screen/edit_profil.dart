@@ -3,7 +3,7 @@ import 'profil.dart';
 import '../main_screen.dart';
 
 class EditProfilPage extends StatefulWidget {
-  EditProfilPage({Key? key}) : super(key: key);
+  // EditProfilPage({Key? key}) : super(key: key);
 
   @override
   _EditProfilPageState createState() => _EditProfilPageState();
@@ -142,12 +142,12 @@ class _EditProfilPageState extends State<EditProfilPage> {
                               FlatButton(
                                   splashColor: Colors.blue,
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => MyScreen()));
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return MyScreen();
+                                    }));
                                   },
-                                  child: Text('Back to Profil',
+                                  child: Text('Back to Home',
                                       style: TextStyle(
                                         color: Colors.blue,
                                         decoration: TextDecoration.underline,
