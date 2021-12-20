@@ -4,7 +4,7 @@ import 'package:flutter_application_project_1/screen/profil.dart';
 import '../list/add_list.dart';
 
 class MyScreen extends StatefulWidget {
-  const MyScreen({Key? key}) : super(key: key);
+  // const MyScreen({Key? key}) : super(key: key);
 
   @override
   State<MyScreen> createState() => _MyScreen();
