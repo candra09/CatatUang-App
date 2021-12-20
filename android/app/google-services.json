@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "609704180117",
+    "project_id": "fir-authentication-25c74",
+    "storage_bucket": "fir-authentication-25c74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609704180117:android:5481ba70dfdab22bed5e9c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_project_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609704180117-s0jenl6mf9q90iup2du96mk7buqtcvtm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABZkRvr29lqurBiCv4JsXurSdQngCUIzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609704180117-s0jenl6mf9q90iup2du96mk7buqtcvtm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
