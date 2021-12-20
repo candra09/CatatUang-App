@@ -1,56 +1,51 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import '../screen/home.dart';
+import '../authentication.dart';
 import '../screen/register.dart';
 import '../main_screen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-}
-
 class LoginPage extends StatefulWidget {
+  LoginPage({Key key}) : super(key: key);
+
   @override
   _LoginPageState createState() => new _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  final _formKey = GlobalKey<FormState>();
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  String email;
+  String password;
+
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
-    User? user = FirebaseAuth.instance.currentUser;
+    // User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
         backgroundColor: Color(0xff9ADC2F),
         body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Column(
+            child: Stack(children: <Widget>[
+          Container(
+            child: Form(
+              key: _formKey,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 160,
+                    height: 150,
                   ),
                   Column(
                     children: [
                       Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                           child: Container(
                             // height: 200,
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                             width: double.infinity,
-
+                            // padding: EdgeInsets.symmetric(horizontal: 20),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.8),
                               borderRadius: BorderRadius.circular(20),
@@ -68,13 +63,13 @@ class _LoginPageState extends State<LoginPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 80,
+                                  height: 70,
                                   decoration: BoxDecoration(
                                       color: Color(0xff238E3B),
                                       shape: BoxShape.circle),
                                   child: Center(
                                     child: Icon(Icons.person,
-                                        size: 70, color: Colors.white),
+                                        size: 60, color: Colors.white),
                                   ),
                                 ),
                                 SizedBox(height: 10),
@@ -84,63 +79,124 @@ class _LoginPageState extends State<LoginPage> {
                                       color: Colors.black,
                                     )),
                                 SizedBox(height: 20),
+
                                 TextFormField(
-                                  controller: emailController,
                                   decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.fromLTRB(15, 10, 15, 10),
-                                      prefixIcon: Icon(Icons.email, size: 30),
-                                      hintText: "Email",
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(32.0),
-                                          borderSide:
-                                              BorderSide(color: Colors.white))),
+                                    contentPadding: EdgeInsets.all(2),
+                                    prefixIcon: Icon(Icons.person, size: 20),
+                                    hintText: "Username",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(32.0),
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (val) {
+                                    email = val;
+                                  },
                                 ),
-                                SizedBox(height: 20),
+                                SizedBox(height: 15),
                                 TextFormField(
-                                  controller: passwordController,
                                   decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                      prefixIcon: Icon(Icons.lock, size: 30),
-                                      hintText: "Password",
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(32.0),
-                                          borderSide:
-                                              BorderSide(color: Colors.white))),
-                                ),
-                                SizedBox(height: 40),
-                                Container(
-                                    height: 60,
-                                    width: 400,
-                                    padding: EdgeInsets.all(10),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Color(0xff238E3B),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                        ),
-                                        elevation: 15.0, // background
-                                        onPrimary: Colors.white, // foreground
-                                      ),
-                                      onPressed: () async {
-                                        await FirebaseAuth.instance
-                                            .signInWithEmailAndPassword(
-                                          email: emailController.text,
-                                          password: passwordController.text,
-                                        );
-                                        setState(() {});
+                                    contentPadding: EdgeInsets.all(2),
+                                    prefixIcon: Icon(Icons.lock, size: 20),
+                                    hintText: "Password",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(32.0),
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                    ),
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _obscureText = !_obscureText;
+                                        });
                                       },
-                                      // style: ElevatedButton.styleFrom(primary: Colors.yellow),
-                                      child: Text('Login',
-                                          style: TextStyle(
-                                            fontSize: 19,
-                                            color: Colors.white,
-                                          )),
-                                    )),
+                                      child: Icon(
+                                        _obscureText
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                      ),
+                                    ),
+                                  ),
+                                  obscureText: _obscureText,
+                                  onSaved: (val) {
+                                    password = val;
+                                  },
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                //
+                                SizedBox(height: 40),
+
+                                SizedBox(
+                                  height: 45,
+                                  width: 250,
+                                  child: RaisedButton(
+                                    onPressed: () {
+                                      // Respond to button press
+
+                                      if (_formKey.currentState.validate()) {
+                                        _formKey.currentState.save();
+
+                                        AuthenticationHelper()
+                                            .signIn(
+                                                email: email,
+                                                password: password)
+                                            .then((result) {
+                                          if (result == null) {
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MyScreen()));
+                                          } else {
+                                            Scaffold.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text(
+                                                result,
+                                                style: TextStyle(fontSize: 16),
+                                              ),
+                                            ));
+                                          }
+                                        });
+                                      }
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(32))),
+                                    color: Color(0xff238E3B),
+                                    textColor: Colors.white,
+                                    child: Text(
+                                      'Login',
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                                FlatButton(
+                                    splashColor: Colors.blue,
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()));
+                                    },
+                                    child: Text('Back to Login',
+                                        style: TextStyle(
+                                          color: Colors.blue,
+                                          decoration: TextDecoration.underline,
+                                        ))),
                               ],
                             ),
                           ))
@@ -174,9 +230,9 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
-        ));
+        ])));
   }
 }
