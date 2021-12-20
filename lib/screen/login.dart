@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                               EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                           child: Container(
                             // height: 200,
-                            padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                            padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                             width: double.infinity,
                             // padding: EdgeInsets.symmetric(horizontal: 20),
                             decoration: BoxDecoration(
@@ -183,20 +183,6 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                 ),
-                                FlatButton(
-                                    splashColor: Colors.blue,
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginPage()));
-                                    },
-                                    child: Text('Back to Login',
-                                        style: TextStyle(
-                                          color: Colors.blue,
-                                          decoration: TextDecoration.underline,
-                                        ))),
                               ],
                             ),
                           ))
