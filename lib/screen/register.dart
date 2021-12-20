@@ -131,10 +131,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                       ),
                                     ),
                                   ),
+                                  obscureText: _obscureText,
                                   onSaved: (val) {
                                     password = val;
                                   },
-                                  obscureText: true,
+                                  // obscureText: true,
                                   validator: (value) {
                                     if (value.isEmpty) {
                                       return 'Please enter some text';
