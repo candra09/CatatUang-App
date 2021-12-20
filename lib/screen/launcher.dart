@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter_application_project_1/screen/login.dart';
 
 class LauncherPage extends StatefulWidget {
-  LauncherPage({Key? key}) : super(key: key);
+  // LauncherPage({Key? key}) : super(key: key);
 
   @override
   _LauncherPageState createState() => _LauncherPageState();
@@ -18,7 +18,7 @@ class _LauncherPageState extends State<LauncherPage> {
   }
 
   startLaunching() async {
-    var duration = const Duration(seconds: 3);
+    var duration = const Duration(seconds: 10);
     return Timer(duration, () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
         return LoginPage();
@@ -39,11 +39,13 @@ class _LauncherPageState extends State<LauncherPage> {
               children: [
                 Icon(
                   Icons.auto_stories_outlined,
-                  size: 60,
+                  size: 90,
                 ),
-                Text('Catatan Keuangan Pribadi',
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Text('Catat Uang',
+                    style: TextStyle(
+                        fontFamily: "DancingScript",
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold)),
               ],
             ))
           ],
